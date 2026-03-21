@@ -1,3 +1,8 @@
+/*
+Contexto: En el desarrollo de videojuegos, saber si un proyectil toca a un enemigo o si el cursor del mouse está sobre un botón circular es vital. 
+Para esto, no usamos cuadrados, sino la distancia matemática pura.
+El Reto: Crea una función llamada hayColision que determine si un punto en el espacio está dentro del área de un círculo.
+*/
 float radio;
 float xc, yc;
 void setup() {
