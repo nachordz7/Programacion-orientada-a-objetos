@@ -4,7 +4,7 @@ void setup() {
 }
 
 void draw() {
-  background(200);
+ 
 
   if (mousePressed) {
     dibujo(mouseX, mouseY, 50, 50);
@@ -18,8 +18,8 @@ void dibujo(float posX, float posY, float ancho, float alto) {
 
   // Triangulo
   triangle(
-    posicionX - ancho/2, posicionY,
-    posicionX + ancho/2, posicionY,
-    posicionX, posicionY - alto
-    );*/
+    posX - ancho/2, posY,
+    posX + ancho/2, posY,
+    posX, posY - alto
+    );
 }
