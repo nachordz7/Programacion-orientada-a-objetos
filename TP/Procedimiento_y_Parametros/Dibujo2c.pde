@@ -11,10 +11,10 @@ void draw() {
   }
 }
 
-void dibujo(float posicionX, float posicionY, float ancho, float alto) {
+void dibujo(float posX, float posY, float ancho, float alto) {
 
   // Rectangulo
-  rect();
+  rect(posX - ancho/2, posY, ancho, alto);
 
   // Triangulo
   triangle( );
