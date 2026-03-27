@@ -1,4 +1,3 @@
-
 int radio = 0 ;
 void setup() {
   size(800, 800);
@@ -16,7 +15,7 @@ void mouseReleased() {
 }
 
 void reCirculos(float x, float y, float w, float h) {
-  rectMode(RADIUS);
+  ellipseMode(RADIUS);
   strokeWeight(2);
   fill(255, 30);
   ellipse(x, y, w/2, h/2);
