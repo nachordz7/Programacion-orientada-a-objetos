@@ -17,5 +17,9 @@ void dibujo(float posX, float posY, float ancho, float alto) {
   rect(posX - ancho/2, posY, ancho, alto);
 
   // Triangulo
-  triangle( );
+  triangle(
+    posicionX - ancho/2, posicionY,
+    posicionX + ancho/2, posicionY,
+    posicionX, posicionY - alto
+    );*/
 }
