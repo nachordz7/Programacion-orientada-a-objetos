@@ -10,3 +10,7 @@ Mediante el uso de la función principal (draw), se debe invocar al procedimient
 
 ## Tarea 4-Geometría Algorítmica y Estructuras de Repetición
 Crear una composición simétrica donde las "Curvas" ocupen los cuatro vértices de la pantalla, cruzándose en el centro.
+
+## Tarea 5-Arrays - Tarea y materiales - Registro de clicks.
+Cada vez que el usuario haga click, se debe dibujar un círculo en la posición actual del mouse. Estas posiciones deben almacenarse en un array, de manera que los círculos permanezcan visibles en pantalla.
+El programa debe mostrar como máximo 10 círculos simultáneamente. Cada nuevo click deberá reemplazar la posición más antigua por la nueva, manteniendo siempre visibles solo los últimos 10 puntos registrados.
