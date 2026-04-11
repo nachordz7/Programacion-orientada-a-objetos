@@ -1,14 +1,14 @@
-//corregir linea 15 a 21
 int cantFil = 15;
 int cantCol = 9;
 boolean [] [] fueCliqueado;
+
 void setup() {
   size(800, 600);
-  fueCliqueado = new boolean [cantFil] [cantCol];
+  fueCliqueado = new boolean [cantCol] [cantFil];
 }
 
 void draw() {
-  background(255);
+
   float ancho = width/cantCol;
   float alto = height/cantFil;
 
@@ -19,12 +19,13 @@ void draw() {
       float limiteDerecho = x + ancho;
       float limiteInf = y + alto;
 
-      if ( (x<mouseX) && (mouseX < limiteDerecho) && (y < mouseY) && (mouseY < limiteInf) ) {
-        fueCliqueado[i][j] = true;
-      }
       if (fueCliqueado[i][j]) {
         fill(0);
       } else fill(255);
+      
+      if (mousePressed && (x<mouseX) && (mouseX < limiteDerecho) && (y < mouseY) && (mouseY < limiteInf) ) {
+        fueCliqueado[i][j] = true;
+      }
       rect(x, y, ancho, alto);
     }
   }
@@ -39,5 +40,3 @@ void mousePressed() {
  //fill(fueCliqueado[i][j]?0:255);
  }
  */
-
-
