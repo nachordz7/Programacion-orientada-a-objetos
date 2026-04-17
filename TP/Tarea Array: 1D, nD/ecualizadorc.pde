@@ -22,3 +22,4 @@ void draw() {
     fill(0);
     rect(x, height - barras[i], ancho, barras[i]);
   }
+}
