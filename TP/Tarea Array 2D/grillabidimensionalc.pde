@@ -1,32 +1,45 @@
 int col = 12;
 int fil = 12;
-float [][] matriz;
+
+float[][] matriz;
+
 void setup() {
   size(800, 600);
-  
+  matriz = new float[col][fil];
 }
 
 void draw() {
-  matriz = new float [col][fil];
-  float ancho = width/col;
-  float alto  = width/fil;
+  background(255);
 
-  for (int i=0; i<col; i++) {
-    for (int j=0; j<fil; j++) {
+  float ancho = width / col;
+  float alto  = height / fil;
+
+  for (int i = 0; i < col; i++) {
+    for (int j = 0; j < fil; j++) {
+
       float x = i * ancho;
       float y = j * alto;
       
-      //rect(x, y, ancho, alto);
-       
-       
-      //float  x1 = map(mouseX, 0, width, 50, 150);
-      rect(x, y, ancho, alto);  
-      
-float value = 25;
-float m = map(value, 0, 100, 0, width);
-ellipse(mouseX, mouseY, m, 10);
-          
+      float centroX = x + ancho/2;
+      float centroY = y + alto/2;
+
+      float d = dist(mouseX, mouseY, centroX, centroY);
+      matriz[i][j] = d;
     }
   }
-  
+
+  for (int i = 0; i < col; i++) {
+    for (int j = 0; j < fil; j++) {
+
+      float x = i * ancho;
+      float y = j * alto;
+
+     
+      float gris = map(matriz[i][j], 0, dist(0, 0, width, height), 255, 0);
+
+      fill(gris);
+      noStroke();
+      rect(x, y, ancho, alto);
+    }
+  }
 }
