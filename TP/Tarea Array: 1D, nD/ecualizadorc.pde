@@ -22,4 +22,11 @@ void draw() {
     fill(0);
     rect(x, height - barras[i], ancho, barras[i]);
   }
+  if (mousePressed) {
+    int indice = int(mouseX / ancho);
+
+    if (indice >= 0 && indice < cantidad) {
+      barras[indice] = constrain(height - mouseY, 0, height);
+    }
+  }
 }
