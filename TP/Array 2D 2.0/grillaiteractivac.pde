@@ -32,3 +32,21 @@ void draw() {
     }
   }
 }
+
+void mousePressed() {
+  int columna = int(mouseX / ancho);
+  int fila = int(mouseY / alto);
+
+  if (columna >= 0 && columna < columnas && fila >= 0 && fila < filas) {
+    estados[columna][fila] = !estados[columna][fila];
+  }
+}
+
+
+void dibujarEstampa(float x, float y, float w, float h) {
+  fill(random(255), random(255), random(255));
+  rect(x, y, w, h);
+
+  fill(255);
+  ellipse(x + w/2, y + h/2, w/2, h/2);
+}
