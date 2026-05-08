@@ -1,0 +1,24 @@
+Ejercicio: Analisis y explicación de evolucion del programa
+
+A partir de los programas trabajados previamente (grilla con color en array 3D, transición de color con array 4D, y versión actual con movimiento), realizar una explicación escrita que dé cuenta de cómo fue evolucionando la estructura de datos y el comportamiento del sistema.
+El objetivo no es describir línea por línea el código, sino .
+¿Qué nuevos datos se agregan además del color?
+¿Cómo se reutiliza la misma lógica para cosas distintas (color y posición)?
+Objetivo: Que puedan identificar que:
+el cambio principal no está en el dibujo, sino en
+el array pasa de guardar valores simples a representar
+la misma estructura permite resolver distintos problemas (color y movimiento)
+Forma de entrega
+Texto breve (entre 10 y 20 líneas) en la carpeta: Se valora claridad por sobre extensión
+Evitar copiar código completo: centrarse en explicar ideas
+Sugerencia: Revisar los programas anteriores antes de escribir. La clave está en comparar, no en describir un solo código aislado.
+
+Al principio el programa usaba un array más simple que solo guardaba datos de color para cada celda de la grilla. Cada celda tenía valores RGB, lo que permitía que cada rectángulo tuviera un color distinto.
+Después el programa evolucionó agregando una nueva dimensión al array para guardar dos estados de cada dato: el valor actual y el valor objetivo. 
+Esto permitió hacer transiciones suaves de color, porque los colores ya no cambiaban de golpe sino de forma progresiva.
+En la última versión se agregaron más datos además del color. Ahora también se guardan las posiciones X e Y de cada celda. 
+Igual que con el color, cada posición tiene un valor actual y uno objetivo, lo que permite que los rectángulos se muevan suavemente por la pantalla.
+La misma lógica se reutiliza tanto para el color como para el movimiento. El programa compara el valor actual con el valor objetivo y lo va acercando poco a poco. 
+Eso demuestra que la misma estructura puede servir para distintas cosas.
+El cambio más importante no está en cómo se dibujan los rectángulos, sino en cómo se organizan los datos dentro del array. 
+El array pasó de guardar datos simples a almacenar mucha información de cada celda, haciendo el sistema mas interactivo.
