@@ -1,0 +1,18 @@
+Tema 2: Funciones, Ciclos y Estructuras de Datos 1D, 2D
+
+
+Ejercicio 3: Simulador de Radar Meteorológico
+Enunciado: Diseña un sketch que genere y renderice una cuadrícula interactiva que simule un radar de intensidad de lluvia (precipitaciones) utilizando una matriz bidimensional (2D).
+Declara una matriz de enteros, de tamaño definido en variables, que representará la densidad de las nubes. En el setup(), asigna a cada celda un valor entero aleatorio entre 0 y 255.
+En el método draw(), dibujar la cuadrícula en la pantalla. El color de relleno (fill) de cada celda debe corresponder al valor numérico guardado en la matriz.
+Añade interactividad: cuando el usuario haga clic sobre una celda específica de la cuadrícula, simula una "ráfaga de viento" reduciendo el valor de esa posición en la matriz en 30 unidades (sin bajar del límite de 0), provocando que visualmente esa zona tenga menos actividad.
+
+Ejercicio 4: Monitor de Nivel de Audio
+Enunciado: Crea un sketch en Processing que simule un ecualizador o monitor de frecuencias de audio.
+Define un array unidimensional (1D) de tipo entero, con un tamaño a definir con una variable, llamado frecuencias. Llénalo en el setup() con valores aleatorios de altura (que representarán los decibelios/volumen de cada frecuencia).
+Desarrolla un procedimiento llamado dibujarEspectro() que dibuje una serie de barras verticales distribuidas a lo largo del ancho de la pantalla para representar visualmente el espectro de audio.
+Diseña una función llamada detectarPicoMaximo() que reciba el arreglo como parámetro, busque cuál es el valor más alto almacenado (la altura máxima alcanzada por alguna barra) y devuelva ese valor (int). Utiliza ese valor de retorno en el draw() para dibujar una línea horizontal roja que marque el "techo" o límite máximo alcanzado por el audio.
+
+
+
+
