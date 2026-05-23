@@ -13,6 +13,28 @@ Define un array unidimensional (1D) de tipo entero, con un tamaño a definir con
 Desarrolla un procedimiento llamado dibujarEspectro() que dibuje una serie de barras verticales distribuidas a lo largo del ancho de la pantalla para representar visualmente el espectro de audio.
 Diseña una función llamada detectarPicoMaximo() que reciba el arreglo como parámetro, busque cuál es el valor más alto almacenado (la altura máxima alcanzada por alguna barra) y devuelva ese valor (int). Utiliza ese valor de retorno en el draw() para dibujar una línea horizontal roja que marque el "techo" o límite máximo alcanzado por el audio.
 
+int cantidad = 10;
+int [] frecuencias = new int[cantidad];
+float y = 0;
+void setup() {
+  size(800, 600);
+  y = random(height);
+}
 
+void draw() {
+  background(125);
+  dibujarEspectro();
+}
+void dibujarEspectro() {
+  for (int i=0; i<cantidad; i++) {
+    float x = i * 100;
+    
+    rect(x, frecuencias[i], width, y);
+  }
+}
+
+/*void detectarPicoMaximo(float ){
+ }
+ */
 
 
