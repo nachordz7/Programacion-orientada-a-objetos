@@ -1,127 +1,194 @@
 
-class Jugador {
+Menu menu;
+Mapa mapa;
+Jugador jugador;
+Nivel nivel;
 
-  PVector posicion;
-  PVector velocidad;
+boolean jugando = false;
+boolean nivelCompletado = false;
 
-  boolean arriba = false;
-  boolean abajo = false;
-  boolean izquierda = false;
-  boolean derecha = false;
+int tiempoInicio;
+int muertes = 0;
 
-  float velocidadMax = 3;
-  float tamano = 20;
+// Fondo RGB
+float colorFondo = 0;
+float velocidadColor = 0.15;
 
 
-  Jugador(float x, float y) {
+void setup() {
 
-    posicion = new PVector(x, y);
-    velocidad = new PVector(0, 0);
+  size(900, 650);
+
+  menu = new Menu();
+  mapa = new Mapa();
+  nivel = new Nivel(1);
+
+  jugador = new Jugador(50, 80);
+
+}
+
+
+void draw() {
+
+  fondoRGB();
+
+  if (!jugando) {
+
+    menu.mostrar();
+
+  } else {
+
+    mapa.mostrar();
+    nivel.mostrar();
+
+    if (!nivelCompletado) {
+      jugador.mover(mapa);
+    }
+
+    jugador.mostrar();
+
+    if (!nivelCompletado && mapa.llegoMeta(jugador)) {
+      nivelCompletado = true;
+    }
+
+    mostrarEstadisticas();
+
+    if (nivelCompletado) {
+
+      textAlign(CENTER, CENTER);
+      fill(0);
+
+      textSize(25);
+      text("¡Nivel completado!", width / 2, height / 2 - 20);
+
+      textSize(17);
+
+      if (nivel.numero < 15) {
+
+        text("Presioná ENTER para continuar",
+          width / 2, height / 2 + 20);
+
+      } else {
+
+        text("¡Completaste todos los niveles!",
+          width / 2, height / 2 + 20);
+
+        text("Presioná ENTER para volver al menú",
+          width / 2, height / 2 + 50);
+
+      }
+
+    }
+
   }
 
+}
 
-  // MOVIMIENTO
-  void mover(Mapa mapa) {
 
-    float x = 0;
-    float y = 0;
+// ESTADÍSTICAS
+void mostrarEstadisticas() {
 
-    if (arriba) y -= 1;
-    if (abajo) y += 1;
-    if (izquierda) x -= 1;
-    if (derecha) x += 1;
+  int tiempo = (millis() - tiempoInicio) / 1000;
 
-    velocidad.set(x, y);
+  fill(0);
+  textAlign(LEFT, TOP);
+  textSize(18);
 
-    if (velocidad.mag() > 0) {
-      velocidad.normalize();
-      velocidad.mult(velocidadMax);
-    }
+  text("Tiempo: " + tiempo + "s", 20, 15);
+  text("Muertes: " + muertes, 20, 40);
 
-    // Movimiento horizontal
-    float nuevaX = posicion.x + velocidad.x;
+}
 
-    if (mapa.posicionValida(nuevaX, posicion.y, tamano)) {
-      posicion.x = nuevaX;
-    }
 
-    // Movimiento vertical
-    float nuevaY = posicion.y + velocidad.y;
+// CARGAR NIVEL
+void cargarNivel() {
 
-    if (mapa.posicionValida(posicion.x, nuevaY, tamano)) {
-      posicion.y = nuevaY;
-    }
+  mapa.cargarNivel(nivel.numero);
+
+  jugador.reiniciar(mapa.inicioX, mapa.inicioY);
+
+  nivelCompletado = false;
+
+}
+
+
+// FONDO RGB VERTICAL
+void fondoRGB() {
+
+  colorFondo += velocidadColor;
+
+  if (colorFondo >= 360) {
+    colorFondo = 0;
   }
 
+  colorMode(HSB, 360, 100, 100);
 
-  // DIBUJAR JUGADOR
-  void mostrar() {
+  color color1 = color(colorFondo, 55, 90);
+  color color2 = color((colorFondo + 35) % 360, 55, 75);
 
-    fill(220, 40, 40);
-    stroke(0);
-    strokeWeight(2);
+  noFill();
 
-    rect(
-      posicion.x,
-      posicion.y,
-      tamano,
-      tamano
-    );
+  for (int y = 0; y < height; y++) {
+
+    float proporcion = y / (float) height;
+
+    stroke(lerpColor(color1, color2, proporcion));
+    line(0, y, width, y);
+
   }
 
+  colorMode(RGB, 255);
 
-  // TECLAS PRESIONADAS
-  void teclaPresionada() {
+}
 
-    if (key == 'w' || key == 'W' || keyCode == UP) {
-      arriba = true;
-    }
 
-    if (key == 's' || key == 'S' || keyCode == DOWN) {
-      abajo = true;
-    }
+// INICIAR JUEGO
+void mousePressed() {
 
-    if (key == 'a' || key == 'A' || keyCode == LEFT) {
-      izquierda = true;
-    }
+  if (!jugando && menu.botonJugar()) {
 
-    if (key == 'd' || key == 'D' || keyCode == RIGHT) {
-      derecha = true;
-    }
+    nivel.numero = 1;
+    muertes = 0;
+
+    cargarNivel();
+
+    jugando = true;
+    tiempoInicio = millis();
+
   }
 
+}
 
-  // TECLAS SOLTADAS
-  void teclaSoltada() {
 
-    if (key == 'w' || key == 'W' || keyCode == UP) {
-      arriba = false;
+// CAMBIAR NIVEL
+void keyPressed() {
+
+  if (nivelCompletado && keyCode == ENTER) {
+
+    if (nivel.numero >= 15) {
+
+      jugando = false;
+      nivel.numero = 1;
+
+      return;
+
     }
 
-    if (key == 's' || key == 'S' || keyCode == DOWN) {
-      abajo = false;
-    }
+    nivel.numero++;
 
-    if (key == 'a' || key == 'A' || keyCode == LEFT) {
-      izquierda = false;
-    }
+    cargarNivel();
 
-    if (key == 'd' || key == 'D' || keyCode == RIGHT) {
-      derecha = false;
-    }
+    return;
+
   }
 
+  jugador.teclaPresionada();
 
-  // REINICIAR JUGADOR
-  void reiniciar(float x, float y) {
+}
 
-    posicion.set(x, y);
-    velocidad.set(0, 0);
 
-    arriba = false;
-    abajo = false;
-    izquierda = false;
-    derecha = false;
-  }
+void keyReleased() {
+
+  jugador.teclaSoltada();
 
 }
