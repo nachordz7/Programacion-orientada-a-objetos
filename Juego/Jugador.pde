@@ -1,194 +1,133 @@
 
-Menu menu;
-Mapa mapa;
-Jugador jugador;
-Nivel nivel;
+class Jugador {
 
-boolean jugando = false;
-boolean nivelCompletado = false;
+  PVector posicion;
+  PVector velocidad;
 
-int tiempoInicio;
-int muertes = 0;
+  boolean arriba = false;
+  boolean abajo = false;
+  boolean izquierda = false;
+  boolean derecha = false;
 
-// Fondo RGB
-float colorFondo = 0;
-float velocidadColor = 0.15;
+  float velocidadMax = 3;
+  float tamano = 20;
 
 
-void setup() {
+  Jugador(float x, float y) {
 
-  size(900, 650);
+    posicion = new PVector(x, y);
+    velocidad = new PVector(0, 0);
 
-  menu = new Menu();
-  mapa = new Mapa();
-  nivel = new Nivel(1);
-
-  jugador = new Jugador(50, 80);
-
-}
+  }
 
 
-void draw() {
+  // MOVIMIENTO
+  void mover(Mapa mapa) {
 
-  fondoRGB();
+    float x = 0;
+    float y = 0;
 
-  if (!jugando) {
+    if (arriba) y--;
+    if (abajo) y++;
+    if (izquierda) x--;
+    if (derecha) x++;
 
-    menu.mostrar();
+    velocidad.set(x, y);
 
-  } else {
-
-    mapa.mostrar();
-    nivel.mostrar();
-
-    if (!nivelCompletado) {
-      jugador.mover(mapa);
+    if (velocidad.mag() > 0) {
+      velocidad.normalize();
+      velocidad.mult(velocidadMax);
     }
 
-    jugador.mostrar();
+    // Movimiento horizontal
+    float nuevaX = posicion.x + velocidad.x;
 
-    if (!nivelCompletado && mapa.llegoMeta(jugador)) {
-      nivelCompletado = true;
+    if (mapa.posicionValida(nuevaX, posicion.y, tamano)) {
+      posicion.x = nuevaX;
     }
 
-    mostrarEstadisticas();
+    // Movimiento vertical
+    float nuevaY = posicion.y + velocidad.y;
 
-    if (nivelCompletado) {
-
-      textAlign(CENTER, CENTER);
-      fill(0);
-
-      textSize(25);
-      text("¡Nivel completado!", width / 2, height / 2 - 20);
-
-      textSize(17);
-
-      if (nivel.numero < 15) {
-
-        text("Presioná ENTER para continuar",
-          width / 2, height / 2 + 20);
-
-      } else {
-
-        text("¡Completaste todos los niveles!",
-          width / 2, height / 2 + 20);
-
-        text("Presioná ENTER para volver al menú",
-          width / 2, height / 2 + 50);
-
-      }
-
+    if (mapa.posicionValida(posicion.x, nuevaY, tamano)) {
+      posicion.y = nuevaY;
     }
 
   }
 
-}
 
+  // DIBUJAR JUGADOR
+  void mostrar() {
 
-// ESTADÍSTICAS
-void mostrarEstadisticas() {
+    fill(220, 40, 40);
+    stroke(0);
+    strokeWeight(2);
 
-  int tiempo = (millis() - tiempoInicio) / 1000;
-
-  fill(0);
-  textAlign(LEFT, TOP);
-  textSize(18);
-
-  text("Tiempo: " + tiempo + "s", 20, 15);
-  text("Muertes: " + muertes, 20, 40);
-
-}
-
-
-// CARGAR NIVEL
-void cargarNivel() {
-
-  mapa.cargarNivel(nivel.numero);
-
-  jugador.reiniciar(mapa.inicioX, mapa.inicioY);
-
-  nivelCompletado = false;
-
-}
-
-
-// FONDO RGB VERTICAL
-void fondoRGB() {
-
-  colorFondo += velocidadColor;
-
-  if (colorFondo >= 360) {
-    colorFondo = 0;
-  }
-
-  colorMode(HSB, 360, 100, 100);
-
-  color color1 = color(colorFondo, 55, 90);
-  color color2 = color((colorFondo + 35) % 360, 55, 75);
-
-  noFill();
-
-  for (int y = 0; y < height; y++) {
-
-    float proporcion = y / (float) height;
-
-    stroke(lerpColor(color1, color2, proporcion));
-    line(0, y, width, y);
+    rect(
+      posicion.x,
+      posicion.y,
+      tamano,
+      tamano
+    );
 
   }
 
-  colorMode(RGB, 255);
 
-}
+  // TECLAS PRESIONADAS
+  void teclaPresionada() {
 
-
-// INICIAR JUEGO
-void mousePressed() {
-
-  if (!jugando && menu.botonJugar()) {
-
-    nivel.numero = 1;
-    muertes = 0;
-
-    cargarNivel();
-
-    jugando = true;
-    tiempoInicio = millis();
-
-  }
-
-}
-
-
-// CAMBIAR NIVEL
-void keyPressed() {
-
-  if (nivelCompletado && keyCode == ENTER) {
-
-    if (nivel.numero >= 15) {
-
-      jugando = false;
-      nivel.numero = 1;
-
-      return;
-
+    if (key == 'w' || key == 'W' || keyCode == UP) {
+      arriba = true;
     }
 
-    nivel.numero++;
+    if (key == 's' || key == 'S' || keyCode == DOWN) {
+      abajo = true;
+    }
 
-    cargarNivel();
+    if (key == 'a' || key == 'A' || keyCode == LEFT) {
+      izquierda = true;
+    }
 
-    return;
+    if (key == 'd' || key == 'D' || keyCode == RIGHT) {
+      derecha = true;
+    }
 
   }
 
-  jugador.teclaPresionada();
 
-}
+  // TECLAS SOLTADAS
+  void teclaSoltada() {
+
+    if (key == 'w' || key == 'W' || keyCode == UP) {
+      arriba = false;
+    }
+
+    if (key == 's' || key == 'S' || keyCode == DOWN) {
+      abajo = false;
+    }
+
+    if (key == 'a' || key == 'A' || keyCode == LEFT) {
+      izquierda = false;
+    }
+
+    if (key == 'd' || key == 'D' || keyCode == RIGHT) {
+      derecha = false;
+    }
+
+  }
 
 
-void keyReleased() {
+  // REINICIAR JUGADOR
+  void reiniciar(float x, float y) {
 
-  jugador.teclaSoltada();
+    posicion.set(x, y);
+    velocidad.set(0, 0);
+
+    arriba = false;
+    abajo = false;
+    izquierda = false;
+    derecha = false;
+
+  }
 
 }
