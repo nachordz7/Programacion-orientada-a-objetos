@@ -1,8 +1,7 @@
 
-Menu menu;
 Mapa mapa;
 Jugador jugador;
-Nivel nivel;
+Menu menu;
 
 boolean jugando = false;
 boolean nivelCompletado = false;
@@ -20,8 +19,7 @@ void setup() {
   size(900, 650);
 
   menu = new Menu();
-  mapa = new Mapa();
-  nivel = new Nivel(1);
+  mapa = new Mapa(1);
 
   jugador = new Jugador(50, 80);
 
@@ -39,7 +37,6 @@ void draw() {
   } else {
 
     mapa.mostrar();
-    nivel.mostrar();
 
     if (!nivelCompletado) {
       jugador.mover(mapa);
@@ -63,7 +60,7 @@ void draw() {
 
       textSize(17);
 
-      if (nivel.numero < 15) {
+      if (mapa.numero < 15) {
 
         text("Presioná ENTER para continuar",
           width / 2, height / 2 + 20);
@@ -103,7 +100,7 @@ void mostrarEstadisticas() {
 // CARGAR NIVEL
 void cargarNivel() {
 
-  mapa.cargarNivel(nivel.numero);
+  mapa.cargarNivel(mapa.numero);
 
   jugador.reiniciar(mapa.inicioX, mapa.inicioY);
 
@@ -147,7 +144,7 @@ void mousePressed() {
 
   if (!jugando && menu.botonJugar()) {
 
-    nivel.numero = 1;
+    mapa.numero = 1;
     muertes = 0;
 
     cargarNivel();
@@ -165,16 +162,16 @@ void keyPressed() {
 
   if (nivelCompletado && keyCode == ENTER) {
 
-    if (nivel.numero >= 15) {
+    if (mapa.numero >= 15) {
 
       jugando = false;
-      nivel.numero = 1;
+      mapa.numero = 1;
 
       return;
 
     }
 
-    nivel.numero++;
+    mapa.numero++;
 
     cargarNivel();
 
