@@ -12,11 +12,8 @@ class Menu {
 
     background(5, 12, 30);
 
-    // Fuente retro
     textFont(fuente);
-   
 
-    // Decoraciones de las esquinas
     dibujarEsquinas();
 
     // Líneas decorativas del título
@@ -80,21 +77,23 @@ class Menu {
     );
 
 
-    // Instrucciones inferiores
+    // Instrucciones
     textAlign(CENTER, CENTER);
     textSize(17);
     fill(65, 115, 175);
     text("WASD / ARROWS TO MOVE", 450, 570);
 
 
-    // Líneas inferiores
     stroke(40, 100, 165);
     strokeWeight(4);
+
     line(180, 570, 290, 570);
     line(610, 570, 720, 570);
+
   }
 
 
+  // DIBUJAR BOTONES
   void dibujarBoton(String nombre, float x, float y,
                     float ancho, float alto,
                     boolean encima, boolean principal) {
@@ -107,7 +106,6 @@ class Menu {
       tono = color(55, 175, 255);
     }
 
-    // Fondo
     noStroke();
 
     if (encima) {
@@ -116,10 +114,8 @@ class Menu {
       fill(5, 12, 30);
     }
 
-    // Marco pixelado
     dibujarMarcoPixel(x, y, ancho, alto, tono);
 
-    // Texto
     if (encima) {
       fill(5, 12, 30);
     } else {
@@ -128,10 +124,10 @@ class Menu {
 
     textAlign(CENTER, CENTER);
     textSize(30);
-    text(nombre, x + ancho/2, y + alto/2);
+    text(nombre, x + ancho / 2, y + alto / 2);
 
 
-    // Icono de Play
+    // Icono
     if (principal) {
 
       if (encima) {
@@ -148,7 +144,6 @@ class Menu {
 
     } else {
 
-      // Trofeo sencillo
       if (encima) {
         fill(5, 12, 30);
       } else {
@@ -161,10 +156,13 @@ class Menu {
 
       rect(x + 34, y + 22, 6, 10);
       rect(x + 65, y + 22, 6, 10);
+
     }
+
   }
 
 
+  // MARCO PIXELADO
   void dibujarMarcoPixel(float x, float y,
                          float ancho, float alto, color tono) {
 
@@ -172,11 +170,9 @@ class Menu {
     strokeWeight(5);
     noFill();
 
-    // Marco principal
     rect(x + 12, y, ancho - 24, alto);
     rect(x, y + 12, ancho, alto - 24);
 
-    // Esquinas pixeladas
     noStroke();
     fill(tono);
 
@@ -191,15 +187,18 @@ class Menu {
 
     rect(x + ancho - 23, y + alto - 8, 15, 8);
     rect(x + ancho - 8, y + alto - 23, 8, 15);
+
   }
 
 
+  // DECORACIONES DE LAS ESQUINAS
   void dibujarEsquinas() {
 
     noStroke();
     fill(45, 115, 185);
 
     for (int i = 0; i < 2; i++) {
+
       rect(15 + i * 20, 15, 12, 12);
       rect(15, 35 + i * 20, 12, 12);
 
@@ -211,24 +210,31 @@ class Menu {
 
       rect(855 - i * 20, 605, 12, 12);
       rect(875, 625 - i * 20, 12, 12);
+
     }
+
   }
 
 
+  // BOTÓN JUGAR
   boolean botonJugar() {
 
     return mouseX >= 240 &&
            mouseX <= 660 &&
            mouseY >= 365 &&
            mouseY <= 430;
+
   }
 
 
+  // BOTÓN LEADERBOARD
   boolean botonLeaderBoard() {
 
     return mouseX >= 240 &&
            mouseX <= 660 &&
            mouseY >= 445 &&
            mouseY <= 510;
+
   }
+
 }
