@@ -40,7 +40,6 @@ class Mapa {
     inicioX = 50;
     inicioY = 80;
 
-    // Zonas verdes generales para los niveles 1 al 5
     inicioZona = new float[] {15, 45, 90, 90};
     meta = new float[] {795, 465, 90, 90};
 
@@ -384,9 +383,8 @@ class Mapa {
   }
 
 
+  // MOSTRAR MAPA
   void mostrar() {
-
-    background(185, 180, 245);
 
     dibujarCaminos(grosor + 6, color(20));
     dibujarHabitaciones(3, color(20));
@@ -399,23 +397,26 @@ class Mapa {
 
     fill(100, 230, 130);
 
+    // Zona de inicio
     rect(
-      inicioZona[0],
-      inicioZona[1],
-      inicioZona[2],
-      inicioZona[3]
+      inicioZona[0] + 10,
+      inicioZona[1] + 10,
+      inicioZona[2] - 20,
+      inicioZona[3] - 20
     );
 
+    // Zona de llegada
     rect(
-      meta[0],
-      meta[1],
-      meta[2],
-      meta[3]
+      meta[0] + 10,
+      meta[1] + 10,
+      meta[2] - 20,
+      meta[3] - 20
     );
 
   }
 
 
+  // DIBUJAR CAMINOS
   void dibujarCaminos(float ancho, color tono) {
 
     stroke(tono);
@@ -439,6 +440,7 @@ class Mapa {
   }
 
 
+  // DIBUJAR HABITACIONES
   void dibujarHabitaciones(float margen, color tono) {
 
     rectMode(CORNER);
@@ -459,9 +461,9 @@ class Mapa {
   }
 
 
+  // COMPROBAR SI UN PUNTO ES TRANSITABLE
   boolean puntoTransitable(float px, float py) {
 
-    // Comprobar habitaciones
     for (int i = 0; i < habitaciones.length; i++) {
 
       float x = habitaciones[i][0];
@@ -478,9 +480,6 @@ class Mapa {
 
     }
 
-
-    // Comprobar caminos, incluyendo los extremos
-    // para que las esquinas no tengan zonas bloqueadas.
     float margen = grosor / 2 + 2;
 
     for (int i = 0; i < caminos.length; i++) {
@@ -521,12 +520,10 @@ class Mapa {
   }
 
 
+  // COMPROBAR POSICIÓN DEL JUGADOR
   boolean posicionValida(float x, float y, float tam) {
 
     float mitad = tam / 2;
-
-    // Comprobamos el centro y los puntos de los lados.
-    // Esto permite girar en las esquinas con mayor facilidad.
 
     return
       puntoTransitable(x + mitad, y + mitad) &&
@@ -538,6 +535,7 @@ class Mapa {
   }
 
 
+  // COMPROBAR LLEGADA A LA META
   boolean llegoMeta(Jugador jugador) {
 
     float centroX = jugador.posicion.x + jugador.tamano / 2;
