@@ -1,6 +1,8 @@
 
 class Mapa {
 
+  int numero;
+
   float grosor = 90;
 
   PVector[][] caminos;
@@ -13,8 +15,8 @@ class Mapa {
   float[] meta;
 
 
-  Mapa() {
-    cargarNivel(1);
+  Mapa(int numero) {
+    cargarNivel(numero);
   }
 
 
@@ -34,6 +36,8 @@ class Mapa {
 
 
   void cargarNivel(int numero) {
+
+    this.numero = numero;
 
     habitaciones = new float[0][4];
 
@@ -412,6 +416,13 @@ class Mapa {
       meta[2] - 20,
       meta[3] - 20
     );
+
+    // INDICADOR DEL NIVEL
+    fill(0);
+    textAlign(RIGHT, TOP);
+    textSize(18);
+
+    text("Nivel: " + numero, 880, 15);
 
   }
 
