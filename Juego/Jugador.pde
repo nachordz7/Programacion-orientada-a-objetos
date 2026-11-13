@@ -1,3 +1,4 @@
+
 class Jugador {
 
   PVector posicion;
@@ -8,14 +9,19 @@ class Jugador {
   boolean izquierda = false;
   boolean derecha = false;
 
-  float velocidadMax = 4;
+  float velocidadMax = 3;
+  float tamano = 20;
+
 
   Jugador(float x, float y) {
+
     posicion = new PVector(x, y);
     velocidad = new PVector(0, 0);
   }
 
-  void mover() {
+
+  // MOVIMIENTO
+  void mover(Mapa mapa) {
 
     float x = 0;
     float y = 0;
@@ -32,30 +38,90 @@ class Jugador {
       velocidad.mult(velocidadMax);
     }
 
-    posicion.add(velocidad);
+    // Movimiento horizontal
+    float nuevaX = posicion.x + velocidad.x;
 
-    posicion.x = constrain(posicion.x, 150, 530);
-    posicion.y = constrain(posicion.y, 150, 330);
+    if (mapa.posicionValida(nuevaX, posicion.y, tamano)) {
+      posicion.x = nuevaX;
+    }
+
+    // Movimiento vertical
+    float nuevaY = posicion.y + velocidad.y;
+
+    if (mapa.posicionValida(posicion.x, nuevaY, tamano)) {
+      posicion.y = nuevaY;
+    }
   }
 
+
+  // DIBUJAR JUGADOR
   void mostrar() {
+
     fill(220, 40, 40);
     stroke(0);
     strokeWeight(2);
-    rect(posicion.x, posicion.y, 20, 20);
+
+    rect(
+      posicion.x,
+      posicion.y,
+      tamano,
+      tamano
+    );
   }
 
+
+  // TECLAS PRESIONADAS
   void teclaPresionada() {
-    if (key == 'w' || key == 'W' || keyCode == UP) arriba = true;
-    if (key == 's' || key == 'S' || keyCode == DOWN) abajo = true;
-    if (key == 'a' || key == 'A' || keyCode == LEFT) izquierda = true;
-    if (key == 'd' || key == 'D' || keyCode == RIGHT) derecha = true;
+
+    if (key == 'w' || key == 'W' || keyCode == UP) {
+      arriba = true;
+    }
+
+    if (key == 's' || key == 'S' || keyCode == DOWN) {
+      abajo = true;
+    }
+
+    if (key == 'a' || key == 'A' || keyCode == LEFT) {
+      izquierda = true;
+    }
+
+    if (key == 'd' || key == 'D' || keyCode == RIGHT) {
+      derecha = true;
+    }
   }
 
+
+  // TECLAS SOLTADAS
   void teclaSoltada() {
-    if (key == 'w' || key == 'W' || keyCode == UP) arriba = false;
-    if (key == 's' || key == 'S' || keyCode == DOWN) abajo = false;
-    if (key == 'a' || key == 'A' || keyCode == LEFT) izquierda = false;
-    if (key == 'd' || key == 'D' || keyCode == RIGHT) derecha = false;
+
+    if (key == 'w' || key == 'W' || keyCode == UP) {
+      arriba = false;
+    }
+
+    if (key == 's' || key == 'S' || keyCode == DOWN) {
+      abajo = false;
+    }
+
+    if (key == 'a' || key == 'A' || keyCode == LEFT) {
+      izquierda = false;
+    }
+
+    if (key == 'd' || key == 'D' || keyCode == RIGHT) {
+      derecha = false;
+    }
   }
+
+
+  // REINICIAR JUGADOR
+  void reiniciar(float x, float y) {
+
+    posicion.set(x, y);
+    velocidad.set(0, 0);
+
+    arriba = false;
+    abajo = false;
+    izquierda = false;
+    derecha = false;
+  }
+
 }
