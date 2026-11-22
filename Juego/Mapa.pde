@@ -40,6 +40,7 @@ class Mapa {
     this.numero = numero;
 
     habitaciones = new float[0][4];
+    caminos = new PVector[0][];
 
     inicioX = 50;
     inicioY = 80;
@@ -48,106 +49,148 @@ class Mapa {
     meta = new float[] {795, 465, 90, 90};
 
 
-    // NIVEL 1
-    if (numero == 1) {
+  // NIVEL 1 - TRES HABITACIONES
 
-      caminos = new PVector[][] {
-        camino(
-          60, 90,
-          60, 420,
-          360, 420,
-          360, 240,
-          720, 240,
-          720, 510,
-          840, 510
-        )
-      };
+if (numero == 1) {
 
-    }
+  habitaciones = new float[][] {
 
+    // Habitacion 1 - Inicio
+    {100, 270, 90, 90},
 
-    // NIVEL 2
+    // Habitacion 2 - Rectangulo principal
+    {190, 180, 510, 280},
+
+    // Habitacion 3 - Meta
+    {700, 270, 90, 90}
+
+  };
+
+  inicioX = 135;
+  inicioY = 315;
+
+  inicioZona = new float[] {110, 285, 70, 70};
+  meta = new float[] {710, 285, 70, 70};
+}
+
+    // NIVEL 2 - FORMA DE U
+
     else if (numero == 2) {
 
-      caminos = new PVector[][] {
-        camino(
-          60, 90,
-          300, 90,
-          300, 300,
-          600, 300,
-          600, 150,
-          840, 150,
-          840, 510
-        )
+      habitaciones = new float[][] {
+
+        // Brazo izquierdo de la U
+        {150, 130, 120, 350},
+
+        // Base de la U
+        {150, 360, 500, 120},
+
+        // Brazo derecho de la U
+        {530, 130, 120, 350}
+
       };
 
+      inicioX = 185;
+      inicioY = 165;
+
+      inicioZona = new float[] {165, 145, 80, 80};
+      meta = new float[] {550, 145, 80, 80};
     }
 
 
-    // NIVEL 3
+    // NIVEL 3 - VARIOS CAMINOS CONECTADOS
+
     else if (numero == 3) {
 
-      caminos = new PVector[][] {
-        camino(
-          60, 90,
-          60, 510,
-          240, 510,
-          240, 180,
-          450, 180,
-          450, 420,
-          690, 420,
-          690, 510,
-          840, 510
-        )
+      habitaciones = new float[][] {
+        {65, 180, 240, 250},
+        {260, 245, 380, 150},
+        {350, 65, 170, 200},
+        {590, 180, 240, 250},
+        {350, 390, 170, 190}
       };
 
+    inicioX = 425;
+inicioY = 125;
+
+inicioZona = new float[] {390, 90, 90, 90};
+      meta = new float[] {390, 465, 90, 90};
     }
 
 
-    // NIVEL 4
-    else if (numero == 4) {
+   
+// NIVEL 4 - LABERINTO FINO AMPLIADO
 
-      caminos = new PVector[][] {
-        camino(
-          60, 90,
-          240, 90,
-          240, 480,
-          420, 480,
-          420, 180,
-          660, 180,
-          660, 510,
-          840, 510
-        )
-      };
+else if (numero == 4) {
 
-    }
+  habitaciones = new float[][] {
+
+    // Entrada
+    {70, 95, 105, 65},
+
+    // Pasillo superior
+    {140, 95, 480, 65},
+
+    // Bajada derecha
+    {555, 95, 65, 215},
+
+    // Pasillo hacia la izquierda
+    {300, 245, 320, 65},
+
+    // Bajada central
+    {300, 245, 65, 180},
+
+    // Pasillo inferior hacia la derecha
+    {300, 360, 350, 65},
+
+    // Subida derecha
+    {585, 245, 65, 180},
+
+    // Pasillo hacia la izquierda
+    {150, 245, 500, 65},
+
+    // Bajada izquierda
+    {150, 245, 65, 205},
+
+    // Salida inferior
+    {150, 385, 115, 65}
+  };
+
+   inicioX = 90;
+  inicioY = 115;
+
+  // Zona verde de inicio
+  inicioZona = new float[] {70, 100, 65, 55};
+
+  // Zona verde de llegada
+meta = new float[] {150, 385, 115, 65};
+}
 
 
-    // NIVEL 5
+
+    // NIVEL 5 - ESCALERA IRREGULAR
+
     else if (numero == 5) {
 
-      caminos = new PVector[][] {
-        camino(
-          60, 90,
-          240, 90,
-          240, 240,
-          480, 240,
-          480, 90,
-          720, 90,
-          720, 300,
-          540, 300,
-          540, 510,
-          840, 510
-        )
+      habitaciones = new float[][] {
+        {55, 65, 210, 150},
+        {205, 165, 190, 170},
+        {355, 275, 190, 170},
+        {505, 375, 180, 150},
+        {645, 440, 210, 120}
       };
 
+      inicioX = 90;
+      inicioY = 100;
+
+      inicioZona = new float[] {65, 75, 90, 90};
+      meta = new float[] {700, 455, 90, 90};
     }
 
 
-    // NIVEL 6
-    else if (numero == 6) {
+    // NIVEL 6 - DISEÑO ORIGINAL
 
-      caminos = new PVector[0][];
+    else if (numero == 6) {
 
       habitaciones = new float[][] {
         {300, 210, 300, 230},
@@ -162,14 +205,12 @@ class Mapa {
 
       inicioZona = new float[] {405, 35, 90, 90};
       meta = new float[] {190, 290, 90, 90};
-
     }
 
 
-    // NIVEL 7
-    else if (numero == 7) {
+    // NIVEL 7 - DISEÑO ORIGINAL
 
-      caminos = new PVector[0][];
+    else if (numero == 7) {
 
       habitaciones = new float[][] {
         {330, 190, 240, 260},
@@ -182,14 +223,12 @@ class Mapa {
 
       inicioZona = new float[] {405, 275, 90, 90};
       meta = new float[] {305, 60, 90, 90};
-
     }
 
 
-    // NIVEL 8
-    else if (numero == 8) {
+    // NIVEL 8 - DISEÑO ORIGINAL
 
-      caminos = new PVector[0][];
+    else if (numero == 8) {
 
       habitaciones = new float[][] {
         {350, 400, 200, 100},
@@ -216,36 +255,32 @@ class Mapa {
 
       inicioZona = new float[] {405, 405, 90, 90};
       meta = new float[] {790, 110, 90, 90};
-
     }
 
 
-    // NIVEL 9
+    // NIVEL 9 - GRAN SALA CENTRAL
+
     else if (numero == 9) {
 
-      caminos = new PVector[0][];
-
       habitaciones = new float[][] {
-        {150, 210, 220, 90},
-        {340, 250, 220, 170},
-        {400, 80, 100, 180},
-        {540, 290, 230, 90},
-        {400, 410, 100, 150}
+        {250, 175, 400, 300},
+        {70, 260, 210, 130},
+        {350, 55, 200, 150},
+        {620, 260, 210, 130},
+        {350, 445, 200, 150}
       };
 
-      inicioX = 175;
-      inicioY = 245;
+      inicioX = 100;
+      inicioY = 295;
 
-      inicioZona = new float[] {150, 210, 90, 90};
-      meta = new float[] {405, 440, 90, 90};
-
+      inicioZona = new float[] {75, 270, 90, 90};
+      meta = new float[] {405, 475, 90, 90};
     }
 
 
-    // NIVEL 10
-    else if (numero == 10) {
+    // NIVEL 10 - DISEÑO ORIGINAL
 
-      caminos = new PVector[0][];
+    else if (numero == 10) {
 
       habitaciones = new float[][] {
         {80, 80, 240, 100},
@@ -260,123 +295,126 @@ class Mapa {
 
       inicioZona = new float[] {85, 85, 90, 90};
       meta = new float[] {650, 165, 90, 90};
-
     }
 
+// NIVEL 11 - DOS GRANDES SECTORES
 
-    // NIVEL 11
-    else if (numero == 11) {
+else if (numero == 11) {
 
-      caminos = new PVector[0][];
+  habitaciones = new float[][] {
+    {60, 110, 300, 430},
+    {330, 270, 240, 100},
+    {540, 110, 300, 430}
+  };
 
-      habitaciones = new float[][] {
-        {70, 450, 200, 120},
-        {230, 390, 100, 120},
-        {300, 300, 220, 100},
-        {480, 210, 100, 100},
-        {560, 120, 250, 120}
-      };
+// INICIO - ZONA SEGURA IZQUIERDA
+inicioX = 75;
+inicioY = 310;
+inicioZona = new float[] {60, 270, 90, 100};
 
-      inicioX = 110;
-      inicioY = 485;
+// META - ZONA SEGURA DERECHA
+meta = new float[] {750, 270, 90, 100};
 
-      inicioZona = new float[] {85, 465, 90, 90};
-      meta = new float[] {640, 135, 90, 90};
-
-    }
+}
 
 
-    // NIVEL 12
+    // NIVEL 12 - RECTANGULO LARGO CON ANTENAS INVERTIDAS
+
     else if (numero == 12) {
 
-      caminos = new PVector[0][];
-
       habitaciones = new float[][] {
-        {300, 210, 300, 240},
-        {180, 100, 220, 120},
-        {80, 300, 230, 100},
-        {590, 300, 220, 100},
-        {400, 440, 100, 150}
+
+        // Rectangulo central
+        {50, 350, 800, 100},
+
+        // Antena izquierda
+        {250, 300, 100, 50},
+        {200, 250, 100, 50},
+        {150, 200, 100, 50},
+        {100, 150, 100, 50},
+
+        // Antena derecha
+        {550, 300, 100, 50},
+        {600, 250, 100, 50},
+        {650, 200, 100, 50},
+        {700, 150, 100, 50}
       };
 
-      inicioX = 210;
-      inicioY = 130;
+      // Aparición en el centro
+      inicioX = 425;
+      inicioY = 385;
 
-      inicioZona = new float[] {185, 105, 90, 90};
-      meta = new float[] {405, 470, 90, 90};
+      // Zona inicial y meta en el centro
+inicioX = 425;
+inicioY = 385;
 
+inicioZona = new float[] {385, 345, 80, 100};
+meta = new float[] {385, 345, 80, 100};
     }
 
 
-    // NIVEL 13
+    // NIVEL 13 - RECORRIDO IRREGULAR
+
     else if (numero == 13) {
 
-      caminos = new PVector[0][];
-
       habitaciones = new float[][] {
-        {100, 100, 160, 90},
-        {210, 160, 90, 230},
-        {210, 360, 300, 90},
-        {420, 250, 90, 120},
-        {420, 180, 250, 90},
-        {650, 180, 90, 260},
-        {560, 390, 180, 90}
-      };
-
-      inicioX = 130;
-      inicioY = 125;
-
-      inicioZona = new float[] {105, 100, 90, 90};
-      meta = new float[] {605, 390, 90, 90};
-
-    }
-
-
-    // NIVEL 14
-    else if (numero == 14) {
-
-      caminos = new PVector[0][];
-
-      habitaciones = new float[][] {
-        {60, 80, 250, 150},
-        {220, 220, 90, 220},
-        {220, 420, 300, 120},
-        {430, 300, 90, 220},
-        {430, 180, 300, 130},
-        {650, 300, 90, 150},
-        {650, 400, 180, 120}
+        {65, 75, 270, 180},
+        {285, 155, 270, 150},
+        {390, 270, 190, 200},
+        {530, 390, 300, 150}
       };
 
       inicioX = 100;
-      inicioY = 110;
+      inicioY = 115;
 
-      inicioZona = new float[] {80, 90, 90, 90};
-      meta = new float[] {680, 415, 90, 90};
-
+      inicioZona = new float[] {75, 90, 90, 90};
+      meta = new float[] {650, 415, 90, 90};
     }
 
 
-    // NIVEL 15
+    
+// NIVEL 14 - RECORRIDO EN FORMA DE ANILLO
+
+else if (numero == 14) {
+
+  habitaciones = new float[][] {
+    {150, 65, 600, 125},
+    {95, 160, 140, 340},
+    {665, 160, 140, 340},
+    {150, 435, 600, 125},
+
+    // HABITACIÓN NUEVA PARA LA META
+    {400, 560, 100, 80}
+  };
+
+  // INICIO
+  inicioX = 450;
+  inicioY = 100;
+  inicioZona = new float[] {405, 65, 90, 90};
+
+  // META - HABITACIÓN INFERIOR
+  meta = new float[] {405, 555, 90, 80};
+}
+
+
+
+    // NIVEL 15 - DESAFIO FINAL
+
     else if (numero == 15) {
 
-      caminos = new PVector[0][];
-
       habitaciones = new float[][] {
-        {300, 220, 300, 230},
-        {100, 300, 210, 90},
-        {400, 80, 100, 150},
-        {590, 300, 220, 90},
-        {400, 440, 100, 150},
-        {100, 100, 190, 90},
-        {280, 130, 100, 110}
+        {250, 175, 400, 300},
+        {65, 275, 220, 150},
+        {365, 55, 170, 150},
+        {620, 275, 220, 150},
+        {365, 445, 170, 150}
       };
 
-      inicioX = 440;
-      inicioY = 500;
+      inicioX = 100;
+      inicioY = 300;
 
-      inicioZona = new float[] {405, 475, 90, 90};
-      meta = new float[] {150, 100, 90, 90};
-
+      inicioZona = new float[] {75, 275, 90, 90};
+      meta = new float[] {655, 275, 90, 90};
     }
 
 
@@ -388,36 +426,41 @@ class Mapa {
 
 
   // MOSTRAR MAPA
+
   void mostrar() {
 
+    // Bordes negros
     dibujarCaminos(grosor + 6, color(20));
     dibujarHabitaciones(3, color(20));
 
+    // Base blanca
     dibujarCaminos(grosor, color(248));
     dibujarHabitaciones(0, color(248));
 
+    // Grilla estilo ajedrez
+    dibujarGrilla();
+
+    // Zonas verdes
     rectMode(CORNER);
     noStroke();
 
     fill(100, 230, 130);
 
-    // Zona de inicio
     rect(
-      inicioZona[0] + 10,
-      inicioZona[1] + 10,
-      inicioZona[2] - 20,
-      inicioZona[3] - 20
+      inicioZona[0],
+      inicioZona[1],
+      inicioZona[2],
+      inicioZona[3]
     );
 
-    // Zona de llegada
     rect(
-      meta[0] + 10,
-      meta[1] + 10,
-      meta[2] - 20,
-      meta[3] - 20
+      meta[0],
+      meta[1],
+      meta[2],
+      meta[3]
     );
 
-    // INDICADOR DEL NIVEL
+    // Número de nivel
     fill(0);
     textAlign(RIGHT, TOP);
     textSize(18);
@@ -428,6 +471,7 @@ class Mapa {
 
 
   // DIBUJAR CAMINOS
+
   void dibujarCaminos(float ancho, color tono) {
 
     stroke(tono);
@@ -452,6 +496,7 @@ class Mapa {
 
 
   // DIBUJAR HABITACIONES
+
   void dibujarHabitaciones(float margen, color tono) {
 
     rectMode(CORNER);
@@ -472,7 +517,69 @@ class Mapa {
   }
 
 
+  // GRILLA ESTILO AJEDREZ
+
+  void dibujarGrilla() {
+
+    int tamCasilla = 30;
+
+color colorClaro = color(245, 239, 220);  // Crema
+color colorOscuro = color(155, 195, 215);  // Celeste
+    noStroke();
+    rectMode(CORNER);
+
+    for (int i = 0; i < habitaciones.length; i++) {
+
+      float xInicial = habitaciones[i][0];
+      float yInicial = habitaciones[i][1];
+
+      float ancho = habitaciones[i][2];
+      float alto = habitaciones[i][3];
+
+      float xFinal = xInicial + ancho;
+      float yFinal = yInicial + alto;
+
+      for (int x = floor(xInicial / tamCasilla) * tamCasilla;
+           x < xFinal;
+           x += tamCasilla) {
+
+        for (int y = floor(yInicial / tamCasilla) * tamCasilla;
+             y < yFinal;
+             y += tamCasilla) {
+
+          // Alternar colores
+          if ((x / tamCasilla + y / tamCasilla) % 2 == 0) {
+            fill(colorClaro);
+          } else {
+            fill(colorOscuro);
+          }
+
+          // Recortar casillas en los bordes
+          float dibujarX = max(x, xInicial);
+          float dibujarY = max(y, yInicial);
+
+          float dibujarAncho =
+            min(x + tamCasilla, xFinal) - dibujarX;
+
+          float dibujarAlto =
+            min(y + tamCasilla, yFinal) - dibujarY;
+
+          rect(
+            dibujarX,
+            dibujarY,
+            dibujarAncho,
+            dibujarAlto
+          );
+
+        }
+      }
+    }
+
+  }
+
+
   // COMPROBAR SI UN PUNTO ES TRANSITABLE
+
   boolean puntoTransitable(float px, float py) {
 
     for (int i = 0; i < habitaciones.length; i++) {
@@ -532,6 +639,7 @@ class Mapa {
 
 
   // COMPROBAR POSICIÓN DEL JUGADOR
+
   boolean posicionValida(float x, float y, float tam) {
 
     float mitad = tam / 2;
@@ -547,6 +655,7 @@ class Mapa {
 
 
   // COMPROBAR LLEGADA A LA META
+
   boolean llegoMeta(Jugador jugador) {
 
     float centroX = jugador.posicion.x + jugador.tamano / 2;

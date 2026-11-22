@@ -3,21 +3,61 @@ class Menu {
 
   PFont fuente;
 
+  boolean mostrandoNiveles = false;
+  boolean mostrandoLeaderboard = false;
+
+  // PALETA RED DEAD
+
+  color fondo = color(32, 5, 12);
+  color bordes = color(125, 25, 40);
+  color rojoSuave = color(85, 15, 28);
+  color verde = color(100, 255, 105);
+  color letras = color(245, 245, 235);
+
+
   Menu() {
+
     fuente = createFont("Monospaced", 32, true);
+
   }
 
 
-  void mostrar() {
+  // =====================================
+  // MOSTRAR MENÚ
+  // =====================================
 
-    background(5, 12, 30);
+  void mostrar(Leaderboard ranking) {
+
+    if (mostrandoNiveles) {
+
+      mostrarNiveles();
+
+    } else if (mostrandoLeaderboard) {
+
+      mostrarLeaderboard(ranking);
+
+    } else {
+
+      mostrarMenuPrincipal();
+
+    }
+
+  }
+
+
+  // =====================================
+  // MENÚ PRINCIPAL
+  // =====================================
+
+  void mostrarMenuPrincipal() {
+
+    background(fondo);
 
     textFont(fuente);
 
     dibujarEsquinas();
 
-    // Líneas decorativas del título
-    stroke(55, 170, 245);
+    stroke(bordes);
     strokeWeight(5);
 
     line(40, 145, 210, 145);
@@ -27,83 +67,230 @@ class Menu {
     line(665, 125, 720, 125);
 
 
-    // Título
+    // TÍTULO
+
     textAlign(CENTER, CENTER);
     noStroke();
 
-    fill(245, 245, 235);
+    fill(letras);
     textSize(75);
-    text("THE LAST", 450, 105);
+    text("RED DEAD", 450, 105);
 
-    fill(100, 255, 105);
+    fill(verde);
     textSize(90);
-    text("DANCE", 450, 235);
+    text("CUBE", 450, 235);
 
 
-    // Recorrido decorativo
-    stroke(55, 145, 220);
+    // RECORRIDO DECORATIVO
+
+    stroke(bordes);
     strokeWeight(6);
+
     line(135, 330, 765, 330);
 
-    // Jugador
     noStroke();
+
+
+    // JUGADOR
+
     fill(255, 65, 65);
     rect(198, 295, 28, 28);
 
-    // Obstáculos
-    fill(70, 175, 255);
+
+    // OBSTÁCULOS
+
+    fill(145, 45, 60);
+
     rect(370, 301, 22, 22);
     rect(435, 301, 22, 22);
     rect(500, 301, 22, 22);
 
-    // Meta
-    fill(100, 255, 105);
+
+    // META
+
+    fill(verde);
     rect(675, 295, 28, 28);
 
 
-    // Botones
+    // BOTÓN PLAY GAME
+
     dibujarBoton(
       "PLAY GAME",
-      240, 365, 420, 65,
+      240, 355, 420, 60,
       botonJugar(),
       true
     );
 
+
+    // BOTÓN NIVELES
+
+    dibujarBoton(
+      "NIVELES",
+      240, 430, 420, 60,
+      botonNiveles(),
+      false
+    );
+
+
+    // BOTÓN LEADERBOARD
+
     dibujarBoton(
       "LEADERBOARD",
-      240, 445, 420, 65,
+      240, 505, 420, 60,
       botonLeaderBoard(),
       false
     );
 
 
-    // Instrucciones
+    // INSTRUCCIONES
+
     textAlign(CENTER, CENTER);
-    textSize(17);
-    fill(65, 115, 175);
-    text("WASD / ARROWS TO MOVE", 450, 570);
+    textSize(15);
+    fill(verde);
 
-
-    stroke(40, 100, 165);
-    strokeWeight(4);
-
-    line(180, 570, 290, 570);
-    line(610, 570, 720, 570);
+    text("WASD / ARROWS TO MOVE", 450, 610);
 
   }
 
 
+  // =====================================
+  // PANTALLA DE SELECCIÓN DE NIVELES
+  // =====================================
+
+  void mostrarNiveles() {
+
+    background(fondo);
+
+    textFont(fuente);
+
+    dibujarEsquinas();
+
+
+    // TÍTULO
+
+    textAlign(CENTER, CENTER);
+    noStroke();
+
+    fill(letras);
+    textSize(42);
+
+    text("SELECT LEVEL", 450, 75);
+
+
+    // LÍNEA DECORATIVA
+
+    stroke(bordes);
+    strokeWeight(4);
+
+    line(170, 115, 730, 115);
+
+
+    // BOTONES DE LOS 15 NIVELES
+
+    for (int i = 1; i <= 15; i++) {
+
+      int columna = (i - 1) % 3;
+      int fila = (i - 1) / 3;
+
+      float x = 170 + columna * 215;
+      float y = 145 + fila * 78;
+
+      boolean encima =
+        mouseX >= x &&
+        mouseX <= x + 150 &&
+        mouseY >= y &&
+        mouseY <= y + 55;
+
+      color tono = bordes;
+
+      if (encima) {
+        fill(tono);
+      } else {
+        fill(fondo);
+      }
+
+      dibujarMarcoPixel(
+        x, y, 150, 55, tono
+      );
+
+
+      if (encima) {
+        fill(letras);
+      } else {
+        fill(verde);
+      }
+
+      textAlign(CENTER, CENTER);
+      textSize(22);
+
+      text(
+        "LEVEL " + i,
+        x + 75,
+        y + 27
+      );
+
+    }
+
+
+    // BOTÓN VOLVER
+
+    dibujarBoton(
+      "VOLVER",
+      340, 555, 220, 55,
+      botonVolver(),
+      false
+    );
+
+  }
+
+
+  // =====================================
+  // PANTALLA LEADERBOARD
+  // =====================================
+
+  void mostrarLeaderboard(Leaderboard ranking) {
+
+    background(fondo);
+
+    textFont(fuente);
+
+    dibujarEsquinas();
+
+    ranking.mostrar();
+
+
+    // BOTÓN VOLVER
+
+    dibujarBoton(
+      "VOLVER",
+      340, 555, 220, 55,
+      botonVolver(),
+      false
+    );
+
+  }
+
+
+  // =====================================
   // DIBUJAR BOTONES
-  void dibujarBoton(String nombre, float x, float y,
-                    float ancho, float alto,
-                    boolean encima, boolean principal) {
+  // =====================================
+
+  void dibujarBoton(
+    String nombre,
+    float x,
+    float y,
+    float ancho,
+    float alto,
+    boolean encima,
+    boolean principal
+  ) {
 
     color tono;
 
     if (principal) {
-      tono = color(100, 255, 105);
+      tono = verde;
     } else {
-      tono = color(55, 175, 255);
+      tono = bordes;
     }
 
     noStroke();
@@ -111,60 +298,96 @@ class Menu {
     if (encima) {
       fill(tono);
     } else {
-      fill(5, 12, 30);
+      fill(fondo);
     }
 
     dibujarMarcoPixel(x, y, ancho, alto, tono);
 
+
     if (encima) {
-      fill(5, 12, 30);
+      fill(fondo);
     } else {
-      fill(245, 245, 235);
+      fill(letras);
     }
 
     textAlign(CENTER, CENTER);
-    textSize(30);
+    textSize(25);
+
     text(nombre, x + ancho / 2, y + alto / 2);
 
 
-    // Icono
+    // ICONOS
+
+
+    // PLAY GAME - TRIÁNGULO
+
     if (principal) {
 
       if (encima) {
-        fill(5, 12, 30);
+        fill(fondo);
       } else {
-        fill(100, 255, 105);
+        fill(verde);
       }
 
       triangle(
-        x + 40, y + 19,
-        x + 40, y + 46,
-        x + 62, y + 32
+        x + 40, y + 16,
+        x + 40, y + 44,
+        x + 62, y + 30
       );
 
-    } else {
+    }
+
+
+    // NIVELES - BLOQUES ESCALONADOS
+
+    else if (nombre.equals("NIVELES")) {
 
       if (encima) {
-        fill(5, 12, 30);
+        fill(fondo);
       } else {
-        fill(55, 175, 255);
+        fill(bordes);
       }
 
-      rect(x + 40, y + 20, 25, 19);
-      rect(x + 47, y + 39, 11, 6);
-      rect(x + 42, y + 45, 21, 4);
+      rect(x + 36, y + 35, 10, 10);
+      rect(x + 49, y + 25, 10, 20);
+      rect(x + 62, y + 15, 10, 30);
 
-      rect(x + 34, y + 22, 6, 10);
-      rect(x + 65, y + 22, 6, 10);
+    }
+
+
+    // LEADERBOARD - TROFEO
+
+    else if (nombre.equals("LEADERBOARD")) {
+
+      if (encima) {
+        fill(fondo);
+      } else {
+        fill(bordes);
+      }
+
+      rect(x + 40, y + 15, 25, 19);
+      rect(x + 47, y + 34, 11, 6);
+      rect(x + 42, y + 40, 21, 4);
+
+      rect(x + 34, y + 17, 6, 10);
+      rect(x + 65, y + 17, 6, 10);
 
     }
 
   }
 
 
+  // =====================================
   // MARCO PIXELADO
-  void dibujarMarcoPixel(float x, float y,
-                         float ancho, float alto, color tono) {
+  // =====================================
+
+  void dibujarMarcoPixel(
+    float x,
+    float y,
+    float ancho,
+    float alto,
+    color tono
+  ) {
 
     stroke(tono);
     strokeWeight(5);
@@ -191,11 +414,14 @@ class Menu {
   }
 
 
+  // =====================================
   // DECORACIONES DE LAS ESQUINAS
+  // =====================================
+
   void dibujarEsquinas() {
 
     noStroke();
-    fill(45, 115, 185);
+    fill(bordes);
 
     for (int i = 0; i < 2; i++) {
 
@@ -216,24 +442,110 @@ class Menu {
   }
 
 
-  // BOTÓN JUGAR
+  // =====================================
+  // DETECTAR BOTONES DEL MENÚ
+  // =====================================
+
   boolean botonJugar() {
 
     return mouseX >= 240 &&
            mouseX <= 660 &&
-           mouseY >= 365 &&
-           mouseY <= 430;
+           mouseY >= 355 &&
+           mouseY <= 415;
 
   }
 
 
-  // BOTÓN LEADERBOARD
+  boolean botonNiveles() {
+
+    return mouseX >= 240 &&
+           mouseX <= 660 &&
+           mouseY >= 430 &&
+           mouseY <= 490;
+
+  }
+
+
   boolean botonLeaderBoard() {
 
     return mouseX >= 240 &&
            mouseX <= 660 &&
-           mouseY >= 445 &&
-           mouseY <= 510;
+           mouseY >= 505 &&
+           mouseY <= 565;
+
+  }
+
+
+  // =====================================
+  // DETECTAR NIVEL SELECCIONADO
+  // =====================================
+
+  int nivelSeleccionado() {
+
+    for (int i = 1; i <= 15; i++) {
+
+      int columna = (i - 1) % 3;
+      int fila = (i - 1) / 3;
+
+      float x = 170 + columna * 215;
+      float y = 145 + fila * 78;
+
+      if (
+        mouseX >= x &&
+        mouseX <= x + 150 &&
+        mouseY >= y &&
+        mouseY <= y + 55
+      ) {
+
+        return i;
+
+      }
+
+    }
+
+    return 0;
+
+  }
+
+
+  // =====================================
+  // DETECTAR BOTÓN VOLVER
+  // =====================================
+
+  boolean botonVolver() {
+
+    return mouseX >= 340 &&
+           mouseX <= 560 &&
+           mouseY >= 555 &&
+           mouseY <= 610;
+
+  }
+
+
+  // =====================================
+  // CAMBIAR PANTALLA
+  // =====================================
+
+  void abrirNiveles() {
+
+    mostrandoNiveles = true;
+    mostrandoLeaderboard = false;
+
+  }
+
+
+  void abrirLeaderboard() {
+
+    mostrandoLeaderboard = true;
+    mostrandoNiveles = false;
+
+  }
+
+
+  void volverMenu() {
+
+    mostrandoNiveles = false;
+    mostrandoLeaderboard = false;
 
   }
 
